@@ -1,3 +1,4 @@
+import { UserEntity } from "@/domain/entities";
 import mongoose, { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
@@ -78,3 +79,6 @@ const userSchema = new Schema(
 		timestamps: true,
 	}
 );
+
+
+export const User = model<UserEntity>("users",userSchema)
