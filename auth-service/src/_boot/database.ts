@@ -15,7 +15,7 @@ export default async () => {
 		await mongoose.connect(mongoUrl.trim());
 		console.log("🍃 MongoDB connected successfully ---> auth-service 🍃");
 	} catch (error: any) {
-		console.error(`❌ Database Connection failed`);
+		console.error(`❌ Database Connection failed❌`);
 		console.error(error.message);
 		process.exit(1);
 	}
