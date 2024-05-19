@@ -1,36 +1,46 @@
-import express, { Request, Response, NextFunction, Application } from 'express'
-import cookieParser from 'cookie-parser'
-import {config} from 'dotenv'
-
-config()
-
-
-const app: Application = express()
-
-const PORT: number = Number(process.env.PORT) || 4002
+import express, { Request, Response, Application, NextFunction, ErrorRequestHandler } from 'express';
+import cookieParser from 'cookie-parser';
+import { config } from 'dotenv';
+import morgan from 'morgan';
+import { routes } from '../infrastructure/routes';
+import { dependancies } from '../_boot/dependancies';
 
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
-app.use(cookieParser())
 
+config();
+
+const app: Application = express();
+const PORT: number = Number(process.env.PORT) || 4002;
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(morgan('dev'));
+
+// Routes
+
+// Home route
 app.get('/', (req: Request, res: Response) => {
     res.status(200).json({
         message: "Auth service ON!"
-    })
+    });
+});
+
+app.use('/api/auth', routes(dependancies));
+
+// Not found handler
+app.use("*", (req: Request, res: Response) => {
+    res.status(404).json({ success: false, status: 404, message: "API Not found" });
 });
 
 
-app.use("*",(req: Request, res: Response) => {
-    res.status(404).json({ success: false, status: 404, message: "Api Not found" });
-  });  
 
-
-  
+// Start server
 const start = () => {
     app.listen(PORT, () => {
         console.log(`The auth-service is listening on port ${PORT}`);
-    })
-}
+    });
+};
 
-export default { start }
+export default { start };
