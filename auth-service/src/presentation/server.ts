@@ -10,7 +10,7 @@ import { dependancies } from '../_boot/dependancies';
 config();
 
 const app: Application = express();
-const PORT: number = Number(process.env.PORT) || 4002;
+const PORT: number = Number(process.env.PORT) || 4001;
 
 // Middleware
 app.use(express.json());
@@ -27,10 +27,10 @@ app.get('/', (req: Request, res: Response) => {
     });
 });
 
-app.use('/api/auth', routes(dependancies));
+app.use('/', routes(dependancies));
 
 // Not found handler
-app.use("*", (req: Request, res: Response) => {
+app.all("*", (req: Request, res: Response) => {
     res.status(404).json({ success: false, status: 404, message: "API Not found" });
 });
 
@@ -39,7 +39,7 @@ app.use("*", (req: Request, res: Response) => {
 // Start server
 const start = () => {
     app.listen(PORT, () => {
-        console.log(`The auth-service is listening on port ${PORT}`);
+        console.log(`The ${process.env.SERVICE} is listening on port ${PORT}`);
     });
 };
 

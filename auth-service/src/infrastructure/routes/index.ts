@@ -8,8 +8,9 @@ export const routes = (dependancies: IDependancies) => {
 
     const router = Router()
 
-    router.route('/signup').post(signup)
+    router.route("/signup").post(signup)
 
+    router.route("/available-email/:email").get(findUserByEmail)
 
     return router
 
