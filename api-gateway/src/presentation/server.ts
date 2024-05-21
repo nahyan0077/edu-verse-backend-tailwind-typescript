@@ -34,7 +34,6 @@ routes.forEach((route) => {
 })
 
 
-
 const start = () => {
 	app.listen(PORT, () => {
 		console.log(`The ${process.env.SERVICE} is listening on port ${PORT}`);

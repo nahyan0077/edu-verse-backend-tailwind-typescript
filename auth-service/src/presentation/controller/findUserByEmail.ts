@@ -14,11 +14,11 @@ export const findUserByEmailController = (dependancies: IDependancies) => {
 			const result = await findUserByEmailUseCase(dependancies).execute(email);
 
             if (result) {
-                res
+                return res
                   .status(200)
                   .json({ success: false, data: {}, message: "Email is already taken" });
               } else {
-                res
+                return res
                   .status(200)
                   .json({ success: true, data: {}, message: "Email is unique!" });
               }
